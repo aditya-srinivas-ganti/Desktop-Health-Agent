@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Computer Health Agent</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="app-shell">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                CH
+            </div>
+
+            <div>
+                <div class="brand-title">
+                    Computer Health
+                </div>
+
+                <div class="brand-subtitle">
+                    Agent Console
+                </div>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <button
+                class="nav-item active"
+                data-page="overview"
+            >
+                <span>◉</span>
+                Overview
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="processes"
+            >
+                <span>▦</span>
+                Processes
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="activity"
+            >
+                <span>◌</span>
+                Activity
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="logs"
+            >
+                <span>≡</span>
+                Logs
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="connection-dot"></div>
+
+            <span>Local Agent</span>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1 id="page-title">
+                    Overview
+                </h1>
+
+                <div class="page-subtitle">
+                    System intelligence and AI release monitor
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="hostname">
+
+                    <span class="status-dot"></span>
+
+                    <span id="hostname">
+                        Detecting...
+                    </span>
+
+                </div>
+
+                <div class="agent-status">
+                    Agent Online
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             OVERVIEW PAGE
+             ================================================= -->
+
+        <section
+            id="overview-page"
+            class="page active-page"
+        >
+
+
+            <!-- HEALTH BANNER -->
+
+            <div class="health-banner">
+
+                <div>
+
+                    <div class="health-label">
+                        SYSTEM STATUS
+                    </div>
+
+                    <div
+                        class="health-value"
+                        id="health-status"
+                    >
+                        Checking...
+                    </div>
+
+                </div>
+
+                <div
+                    class="health-time"
+                    id="system-time"
+                >
+                    --
+                </div>
+
+            </div>
+
+
+
+            <!-- SYSTEM METRICS -->
+
+            <div class="metrics-grid">
+
+
+                <div class="metric-card">
+
+                    <div class="metric-header">
+
+                        <span>CPU Usage</span>
+
+                        <span id="cpu-value">
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-track">
+
+                        <div
+                            class="progress-fill"
+                            id="cpu-progress"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="metric-card">
+
+                    <div class="metric-header">
+
+                        <span>Memory Usage</span>
+
+                        <span id="memory-value">
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-track">
+
+                        <div
+                            class="progress-fill"
+                            id="memory-progress"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="metric-card">
+
+                    <div class="metric-header">
+
+                        <span>Disk Usage</span>
+
+                        <span id="disk-value">
+                            0%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-track">
+
+                        <div
+                            class="progress-fill"
+                            id="disk-progress"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RESOURCE GRAPH -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Resource Monitor
+                        </h2>
+
+                        <p>
+                            Live CPU, memory and disk utilization
+                        </p>
+
+                    </div>
+
+                    <span class="live-indicator">
+                        LIVE
+                    </span>
+
+                </div>
+
+                <div class="graph-container">
+
+                    <canvas id="resourceChart"></canvas>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 AI MODEL RELEASE FEED
+                 ================================================= -->
+
+            <div class="panel model-panel">
+
+                <div class="panel-header model-header">
+
+                    <div>
+
+                        <div class="section-kicker">
+                            AI INTELLIGENCE MONITOR
+                        </div>
+
+                        <h2>
+                            AI Model Releases
+                        </h2>
+
+                        <p>
+                            Major model releases from the last three years
+                        </p>
+
+                    </div>
+
+
+                    <div class="model-summary">
+
+                        <div
+                            class="model-count"
+                            id="model-count"
+                        >
+                            --
+                        </div>
+
+                        <div class="model-count-label">
+                            releases
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MODEL CONTROLS -->
+
+                <div class="model-controls">
+
+                    <input
+                        type="text"
+                        id="model-search"
+                        class="model-search"
+                        placeholder="Search model, company or category..."
+                    >
+
+
+                    <select
+                        id="model-year"
+                        class="model-select"
+                    >
+
+                        <option value="all">
+                            All years
+                        </option>
+
+                        <option value="2026">
+                            2026
+                        </option>
+
+                        <option value="2025">
+                            2025
+                        </option>
+
+                        <option value="2024">
+                            2024
+                        </option>
+
+                        <option value="2023">
+                            2023
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- MODEL FEED -->
+
+                <div
+                    id="model-feed"
+                    class="model-feed"
+                >
+
+                    <div class="feed-loading">
+
+                        <div class="spinner"></div>
+
+                        Loading AI model releases...
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="model-error"
+                    class="model-error hidden"
+                >
+                    AI model feed unavailable.
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROCESSES PAGE
+             ================================================= -->
+
+        <section
+            id="processes-page"
+            class="page"
+        >
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Running Processes
+                        </h2>
+
+                        <p>
+                            Processes consuming the most resources
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="refresh-processes"
+                        class="action-button"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>PID</th>
+
+                                <th>Process</th>
+
+                                <th>CPU</th>
+
+                                <th>Memory</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="process-table">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ACTIVITY PAGE
+             ================================================= -->
+
+        <section
+            id="activity-page"
+            class="page"
+        >
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Agent Activity
+                        </h2>
+
+                        <p>
+                            Recent events detected by the agent
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="activity-list"
+                    class="activity-list"
+                >
+
+                    <div class="empty-state">
+                        Loading activity...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             LOGS PAGE
+             ================================================= -->
+
+        <section
+            id="logs-page"
+            class="page"
+        >
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            System Logs
+                        </h2>
+
+                        <p>
+                            Recent entries from the health agent
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="refresh-logs"
+                        class="action-button"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="logs"
+                    class="logs-container"
+                >
+
+                    <div class="empty-state">
+                        Loading logs...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- Chart.js -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js"
+></script>
+
+
+<!-- Application JS -->
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
+
+</body>
+
+</html>
