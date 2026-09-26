@@ -77,6 +77,3 @@ It keeps only releases from the last 3 years (`LOOKBACK_YEARS` in the script) an
 - The app runs Flask's built-in dev server (`debug=True`) — don't expose this directly to the internet as-is.
 - `model_agent.py`'s scraping logic relies on the current HTML structure of each source's news page and may need updates if those pages change.
 
-## License
-
-No license has been specified yet. Add a `LICENSE` file if you intend for others to use or contribute to this project.
